@@ -34,13 +34,20 @@ export const Private = () => {
 		  }, [])
 	
 		  console.log("this is the email", email);
+		  console.log(store.token)
 	  return (
 		<div className="text-center mt-5">
+			
 		  {token ? (
-			<div>
-			  <h1>U are now on your private page {email} </h1>
-			  <div></div>
-			</div>
+			<><button className="nav-link" to="/" onClick={() => {	
+					localStorage.clear()
+					navigate('/login')
+				  } }>
+					  Logout
+				  </button><div>
+						  <h1>U are now on your private page {email} </h1>
+						  <div></div>
+					  </div></>
 		  ) : (
 			// navigate("/")
 			<div>

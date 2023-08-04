@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
+			
 			// Use getActions to call a function within a fuction
 			addFav: (newFav) => {
 				let newFavorites = getStore().favorites;

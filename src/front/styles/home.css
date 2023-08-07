@@ -7,8 +7,54 @@
 */
 
 
-.bg-image {
-    background-size: cover;
-    background: linear-gradient(to bottom, rgb(110, 197, 255), white);
+.scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
 }
 
+.scroll-section {
+  scroll-snap-align: start;
+  height: 100vh;
+  transition: background-color 1s ease;
+}
+
+.bg-image {
+  height: 100vh;
+  background: linear-gradient(to bottom, rgb(110, 197, 255), white);
+}
+
+.bg-light {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.about-text {
+  font-size: 1.25rem; /* Increase the font size for readability */
+  line-height: 1.5; /* Better line spacing for readability */
+}
+
+
+.about-text {
+  font-size: 22px; /* Increase the font size for readability */
+  line-height: 1.5; /* Better line spacing for readability */
+}
+
+.text-dark {
+  color: #343a40;
+}
+
+.text-primary {
+  color: #007bff;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-info {
+  color: #17a2b8;
+}
+
+.text-warning {
+  color: #ffc107;
+}

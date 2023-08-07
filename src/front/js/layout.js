@@ -6,6 +6,7 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { LandingPage } from "./pages/landingPage";
+import { CurrencyConverter  } from "./pages/currencyconverter";
 import { Single } from "./pages/single";
 import { Private} from "./pages/private"
 import injectContext from "./store/appContext";
@@ -38,6 +39,7 @@ const Layout = () => {
 
                         
                         <Route element={<Register />}path="/register" />
+                        <Route element={<CurrencyConverter />}path="/currency" />
 
 
                         <Route element={<Demo />} path="/demo" />

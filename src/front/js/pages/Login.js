@@ -1,3 +1,4 @@
+
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ export const Login = () => {
         alert(`Logged in successfully as ${email}`);
         localStorage.setItem('token', token)
         navigate('/private')
+
       } else {
         alert('Invalid credentials. Please try again.');
       }
@@ -32,17 +34,20 @@ export const Login = () => {
       alert('An error occurred during login. Please try again later.');
     }
   };
+
   return (
     <div className="login-container">
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div className="form-group">
+
           <label htmlFor="email">Email:</label>
           <input
             type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+
             disabled={isLoggingIn}
             required
           />
@@ -65,5 +70,15 @@ export const Login = () => {
     </div>
   );
 };
+
+
+
+
+
+
+
+    
+
 // export default Login;
 export default Login;
+

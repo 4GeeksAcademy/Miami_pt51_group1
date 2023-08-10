@@ -7,44 +7,88 @@
 */
 
 
-.scroll-container {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+
+.bg-image{
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #12aba0ba);
+    background-size: 600% 600%;
+    animation: gradientLoop 10s linear
+infinite;
 }
-
-.scroll-section {
-  scroll-snap-align: start;
-  height: 100vh;
-  transition: background-color 1s ease;
+@keyframes gradientLoop{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
-
-.bg-image {
-  height: 100vh;
-  background: linear-gradient(to bottom, rgb(110, 197, 255), white);
+.searchbar{
+    padding-left: 50px;
+    padding-top: 6%;
+    padding-bottom: 1%;
+    height: 80px;
+    font-weight: lighter;
+    font-size:x-large;
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+    animation: gradientLoop 9s linear
+infinite;
 }
+@keyframes gradientLoop{
+    0%{
+      background-position: 50% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 80% 50%;
+    }
 
-.bg-light {
-  background-color: rgba(255, 255, 255, 0.7);
 }
+label{
+    color:  rgb(1, 63, 1);
+    font-size:200%;
+    font-kerning: calc(10px);
+    font-style: oblique;
+    -webkit-flow-into: calc(10%);
+    font-family:fantasy, copperplate
 
-.about-text {
-  font-size: 1.25rem; /* Increase the font size for readability */
-  line-height: 1.5; /* Better line spacing for readability */
 }
-
-
-.about-text {
-  font-size: 22px; /* Increase the font size for readability */
-  line-height: 1.5; /* Better line spacing for readability */
+h1{
+    color: rgba(240, 248, 255, 0.296);
+   -webkit-text-stroke-color: #17a2b8;
+    text-align: center;
+    font-size: 750%;
+    font-weight: bolder;
+    opacity: var(30%);
+    animation: opacityLoop 7s vertical
+infinite;
 }
-
-.text-dark {
-  color: #343a40;
+@keyframes opacityLoop{
+        0%{
+          background-position: 0% 50%;
+        }
+        50%{
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
 }
-
-.text-primary {
-  color: #007bff;
+.searchbutton{
+background-color: rgba(128, 128, 128, 0.309);
+mask-border-width: 20px;
+border-color: rgba(128, 128, 128, 0.306);
+outline-color: #ffffff68;
+width: 95px;
+height: 45px;
+font-size:large;
+font-weight: bold;
 }
 
 .text-success {
@@ -57,4 +101,26 @@
 
 .text-warning {
   color: #ffc107;
+}
+
+about-section{
+border-top-color: crimson;
+border-bottom-color: darkgreen;
+border-left-color: #ffc107;
+border-right-color: blue;
+border-style:solid;
+border-width: thin;
+}
+h2{
+    color: darkgrey;
+    font-weight: lighter;
+    font-size: xx-large;
+}
+my-navbar{
+    background: linear-gradient(45deg, #ffffff, #8dcbf7aa, #b8ecea);
+}
+navbar-brand{
+    text-underline-position:above;
+    text-decoration-color: #ffffff;
+    align-content:start;
 }

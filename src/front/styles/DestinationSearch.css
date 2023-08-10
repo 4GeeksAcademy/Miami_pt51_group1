@@ -1,0 +1,59 @@
+.search-body {
+  background: radial-gradient(401px at 50.6% -0.3%, rgba(255, 255, 255, 0.31) 1.2%, rgb(36, 212, 219) 100.2%);
+  background: url("https://images.unsplash.com/photo-1576035508033-5450beeb41de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80");
+  background-size: cover;
+}
+.my-search-container {
+  max-width: 600px;
+  margin: 125px auto;
+  padding: 20px;
+  background: rgba(242, 239, 238);
+  outline: none;
+  background: url("https://images.unsplash.com/photo-1576035508033-5450beeb41de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80");
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 150px;
+}
+.favorite-button {
+  cursor: pointer;
+  color: red;
+  padding: 0;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+  border-radius: none;
+}
+.favorite-button.flipped {
+  transform: rotate(180deg);
+}
+.jumbotron {
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background-color: #E9ECEF;
+  border-radius: 0.3rem;
+  background: radial-gradient(401px at 50.6% -0.3%, rgba(255, 255, 255, 0.31) 1.2%, rgb(36, 212, 219) 100.2%);
+
+
+  
+}
+.jumbotron h1 {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 2.5rem;
+}
+.jumbotron .lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+

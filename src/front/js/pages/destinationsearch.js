@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../styles/DestinationSearch.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import context from "react-bootstrap/esm/AccordionContext";
+import { Context } from "../store/appContext";
+
 
 function convertState(input) {
   var states = [
@@ -74,6 +77,10 @@ const MySearch = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  // const {store,actions} = useContext(context);
+  const [ store, setStore ] = useState( {
+    favorites:[]
+  } );
 
   useEffect(() => {
     setError(null);
@@ -168,7 +175,9 @@ const MySearch = () => {
   };
 
   const isFavorite = (destination) => {
+    setStore({favorites : destination});
     return favorites.includes(destination);
+    
   };
 
   const clearResults = () => {

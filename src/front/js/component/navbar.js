@@ -6,7 +6,8 @@ import "../../styles/MyNavbar.css"; // Importing the CSS file
 
 export const MyNavbar = () => {
 	return (
-		<Navbar bg="light" expand="lg" className="my-navbar">
+		<div>
+			<Navbar bg="light" expand="lg" className="my-navbar">
 			<Container>
 				<Navbar.Brand >
 					<RouterLink to="/">
@@ -18,17 +19,16 @@ export const MyNavbar = () => {
 					<Nav >
 						<RouterLink className="nav-link" to="/login">Login</RouterLink>
 						<RouterLink className="nav-link" to="/register">Register</RouterLink>
-						
-						<ScrollLink activeClass="active" to="search-section" spy={true} smooth={true} offset={-70} duration={500} className="nav-link" >
-							Search
-						</ScrollLink>
+						<RouterLink className="nav-link" to="/currency">CurrencyConverter</RouterLink>
+						<RouterLink className="nav-link" to="/destinations">Search</RouterLink>
 
-						<ScrollLink activeClass="active" to="about-section" spy={true} smooth={true} offset={-70} duration={500} className="nav-link" >
+						<RouterLink className="nav-link" to="/">
 							About
-						</ScrollLink>
+						</RouterLink>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>
+		</div>
 	);
 };

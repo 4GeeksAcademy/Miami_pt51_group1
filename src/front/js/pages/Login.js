@@ -1,7 +1,7 @@
 
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import './Login.css';
 export const Login = () => {
@@ -65,6 +65,9 @@ export const Login = () => {
         </div>
         <button type="submit" disabled={isLoggingIn}>
           {isLoggingIn ? 'Logging in...' : 'Login'}
+        </button>
+        <button type="submit" disabled={isLoggingIn}>
+          <RouterLink className="nav-link" to="/forgot-password">Forgot Password</RouterLink>
         </button>
       </form>
     </div>

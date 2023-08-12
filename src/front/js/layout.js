@@ -11,6 +11,7 @@ import { Single } from "./pages/single";
 import { Private} from "./pages/private"
 import injectContext from "./store/appContext";
 import MySearch from "./pages/destinationsearch";
+import ForgotPassword from "./pages/ForgotPassword";
 
 import { MyNavbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -44,7 +45,8 @@ const Layout = () => {
                         <Route element={<Register />}path="/register" />
                         <Route element={<CurrencyConverter />}path="/currency" />
 
-
+                        
+                        <Route element={<ForgotPassword />} path="/forgot-password" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Private/>} path="/private"/>

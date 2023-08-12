@@ -177,6 +177,62 @@ destinations_data = [
 ]
 
 
+@api.route('/reset-password', methods=['POST'])
+def reset_password():
+    email = request.json.get('email', None)
+    question = request.json.get('question', None) # not actually needed here, but for consistency
+    answer = request.json.get('answer', None)
+    new_password = request.json.get('newPassword', None)
+    user = User.query.filter_by(email=email).first()
+    
+    if user is None:
+        return jsonify({"Error": "User not found"}), 404
+
+    if user.recovery_answer == answer:
+        user.password = new_password
+        db.session.commit()
+        return jsonify({"Response": "Password reset successfully"}), 200
+    else:
+        return jsonify({"Error": "Incorrect answer to security question"}), 400
+
+
+
+
+
+# GET SECURITY QUESTIONS ENDPOINT
+@api.route('/get-security-questions', methods=['POST'])
+def get_security_questions():
+    email = request.json.get('email', None)
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"questions": user.recovery_question}), 200
+    return jsonify({"error": "User not found"}), 404
+
+# VERIFY SECURITY ANSWERS ENDPOINT
+@api.route('/verify-security-answers', methods=['POST'])
+def verify_security_answers():
+    email = request.json.get('email', None)
+    answers = request.json.get('answers', None)
+    user = User.query.filter_by(email=email).first()
+    if user and answers == user.recovery_answer:
+        temp_token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(minutes=10))
+        return jsonify({"token": temp_token, "message": "Answers verified"}), 200
+    return jsonify({"error": "Invalid answers"}), 403
+
+# UPDATE PASSWORD ENDPOINT (PROTECTED)
+@api.route('/update-password', methods=['POST'])
+@jwt_required()
+def update_password():
+    user_id = get_jwt_identity()
+    new_password = request.json.get('new_password', None)
+    user = User.query.get(user_id)
+    if user:
+        user.password = new_password
+        db.session.commit()
+        return jsonify({"message": "Password updated successfully"}), 200
+    return jsonify({"error": "User not found"}), 404
+
+
 
 @api.route('/api/destination/<int:destination_id>', methods=['GET'])
 def get_destination(destination_id):

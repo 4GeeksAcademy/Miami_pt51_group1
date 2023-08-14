@@ -1,3 +1,5 @@
+// import { await } from "await";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -11,10 +13,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			// Use getActions to call a function within a fuction
 			addFav: (newFav) => {
-				let newFavorites = getStore().favorites;
-				newFavorites.push(newFav);
-				setStore({ favorites: newFavorites });
+				const store = getStore();
+				const opts = {
+					method : "PUT" ,
+					headers: {
+						"content-Type":"aplication/json"
+					},
+					body:JSON.stringify({newFav:favorites}),
+					
+				};
+				try {
+					const response = fetch(
+						process.env.BACKEND_URL+"/destinations",opts
+					);
+					if(response.status != 200){
+						alert("response was not 200")
+						return false
+					}
+					const data =  response.json();
+					console.log("favorites", data)
+					setStore({favorites: data.response_body});
+					return true
+					
+				} catch (error) {
+					console.error("error:", error)
+					
+				}
+				
 			  },
+			  
 			  destination: async () =>{
 				try{
 

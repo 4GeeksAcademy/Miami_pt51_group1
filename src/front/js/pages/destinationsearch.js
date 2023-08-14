@@ -77,10 +77,13 @@ const MySearch = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  // const {store,actions} = useContext(context);
-  const [ store, setStore ] = useState( {
-    favorites:[]
-  } );
+   const {store,actions} = useContext(context);
+  // const [ store, setStore ] = useState( {
+  //   favorites:[]
+  // } );
+  const handleFavorites = () =>{
+    actions.addFav(favorites)
+  }
 
   useEffect(() => {
     setError(null);
@@ -175,7 +178,7 @@ const MySearch = () => {
   };
 
   const isFavorite = (destination) => {
-    setStore({favorites : destination});
+    // setStore({favorites : destination});
     return favorites.includes(destination);
     
   };

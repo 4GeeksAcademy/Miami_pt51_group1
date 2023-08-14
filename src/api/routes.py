@@ -167,6 +167,18 @@ def get_all_Destinations():
     response_body = jsonify(mapped_Destinations)
     return response_body, 200
 
+@api.route("/destination", methods=["PUT"])
+def put_users_favorites():
+     user_email = get_jwt_identity()
+     user = User.query.filter_by( email = user_email ).first()
+     response_body = request.get_json()
+     favorites = Favorites(Destination = response_body["newFav"])
+     db.session.add(favorites)
+     db.session.commit()
+
+
+     return response_body, 200
+
 
 
 

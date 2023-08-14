@@ -43,8 +43,7 @@ class Favorites(db.Model):
     # maybe db.Boolean(False)
     # favorite = db.Column(db.Boolean,db.ForeignKey('user.favorites') , unique=False, nullable=True ,default= False)
     User_id = db.Column( db.Integer, db.ForeignKey("user.id"))
-    country = db.Column(db.String(120), unique=False, nullable=True)
-    territory_state = db.Column(db.String(80), unique=False, nullable=True)
+    Destination = db.Column(db.String(120), unique=False, nullable=True)
     # destinations =db.relationship("Destinations", backref= "favorites")
     # foreingKey = User.db 
     # user_id = db.Column(db.Integer, ForeignKey(User.id),unique = True )

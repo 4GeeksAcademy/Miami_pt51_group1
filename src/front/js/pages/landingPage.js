@@ -9,11 +9,12 @@ export const LandingPage = () => {
 	return (
 
 		<div className="welcome_text bg-image">
-			<Form className="">
-				<FormControl type="text" placeholder="Where would you like to go...?" className="searchbar" />
-			</Form>
-			<Button className="searchbutton">Search</Button>
 			<h1 className="">Welcome to the Travel Site!</h1>
+            <a href="/destinations" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <button style={{ fontSize: '2em', padding: '20px', backgroundColor: 'rgba(0, 0, 255, 0.5)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
+                    BEGIN YOUR SEARCH!!!
+                </button>
+            </a>
 			<div id="about-section" className="scroll-section text-center d-flex flex-column justify-content-center align-items-center px-5">
 				<h2 className="text-dark">About Us</h2>
 				<p className="w-51 text-dark about-text">

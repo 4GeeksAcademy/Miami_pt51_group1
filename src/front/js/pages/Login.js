@@ -34,10 +34,11 @@ export const Login = () => {
       alert('An error occurred during login. Please try again later.');
     }
   };
-
+  
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    <div>
+      
+      {/* <h2 style={{color: 'black'}}>Login</h2> */}
       <form onSubmit={handleLogin}>
         <div className="form-group">
 

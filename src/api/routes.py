@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Favorites , Destinations
+from api.models import db, User, Favorites , Destinations, Flights
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
 
@@ -284,6 +284,20 @@ def save_destination():
     destinations_data.append(new_destination)
 
     return jsonify({'message': 'Destination saved successfully.', 'new_destination': new_destination}), 201
+
+@api.route("/flightinfo",methods=["POST"]) 
+def flights():
+    response_body= request.get_json()
+    flight=Flights(price=response_body["price"],flightProvider=response_body["flightProvider"],depatureDate=response_body["depatureDate"])
+    db.session.add(flight)
+    db.session.commit()
+
+    return jsonify({"msg":"flight created"})
+@api.route("/getflightinfo",methods=["GET"]) 
+def get_flights():
+    flight=Flights.query.all()
+    flight_list=list(map(lambda x: x.serialize(), flight))
+    return jsonify(flight_list),200
 
 if __name__ == '__main__':
     app.run()

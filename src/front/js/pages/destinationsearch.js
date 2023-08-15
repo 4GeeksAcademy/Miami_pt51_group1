@@ -5,80 +5,13 @@ import context from "react-bootstrap/esm/AccordionContext";
 import { Context } from "../store/appContext";
 
 
-function convertState(input) {
-  var states = [
-    ['Arizona', 'AZ'],
-    ['Alabama', 'AL'],
-    ['Alaska', 'AK'],
-    ['Arkansas', 'AR'],
-    ['California', 'CA'],
-    ['Colorado', 'CO'],
-    ['Connecticut', 'CT'],
-    ['Delaware', 'DE'],
-    ['Florida', 'FL'],
-    ['Georgia', 'GA'],
-    ['Hawaii', 'HI'],
-    ['Idaho', 'ID'],
-    ['Illinois', 'IL'],
-    ['Indiana', 'IN'],
-    ['Iowa', 'IA'],
-    ['Kansas', 'KS'],
-    ['Kentucky', 'KY'],
-    ['Louisiana', 'LA'],
-    ['Maine', 'ME'],
-    ['Maryland', 'MD'],
-    ['Massachusetts', 'MA'],
-    ['Michigan', 'MI'],
-    ['Minnesota', 'MN'],
-    ['Mississippi', 'MS'],
-    ['Missouri', 'MO'],
-    ['Montana', 'MT'],
-    ['Nebraska', 'NE'],
-    ['Nevada', 'NV'],
-    ['New Hampshire', 'NH'],
-    ['New Jersey', 'NJ'],
-    ['New Mexico', 'NM'],
-    ['New York', 'NY'],
-    ['North Carolina', 'NC'],
-    ['North Dakota', 'ND'],
-    ['Ohio', 'OH'],
-    ['Oklahoma', 'OK'],
-    ['Oregon', 'OR'],
-    ['Pennsylvania', 'PA'],
-    ['Rhode Island', 'RI'],
-    ['South Carolina', 'SC'],
-    ['South Dakota', 'SD'],
-    ['Tennessee', 'TN'],
-    ['Texas', 'TX'],
-    ['Utah', 'UT'],
-    ['Vermont', 'VT'],
-    ['Virginia', 'VA'],
-    ['Washington', 'WA'],
-    ['West Virginia', 'WV'],
-    ['Wisconsin', 'WI'],
-    ['Wyoming', 'WY'],
-  ];
-  input = input.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-  for (let i = 0; i < states.length; i++) {
-    if (states[i][0] === input) {
-      return states[i][1];
-    }
-  }
-}
-
 const MySearch = () => {
   const [search, setSearch] = useState("");
   const [destinationResult, setDestinationResult] = useState([]);
-  const [weatherResult, setWeatherResult] = useState([]);
   const [flightResult, setFlightResult] = useState([]);
+  const [secondFlight, setSecondFlight] = useState([]);
+  const [airportResult, setAirportResult] = useState([]);
   const [input, setInput] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [favorites, setFavorites] = useState([]);
-   const {store,actions} = useContext(Context);
-  // const [ store, setStore ] = useState( {
   //   favorites:[]
   // } );
   const handleFavorites = (favorites) =>{
@@ -86,84 +19,92 @@ const MySearch = () => {
     actions.addFav(favorites)
     
   }
+=======
+  const [flights, setFlights] = useState([]);
+>>>>>>> 9c5b9f73c4803ec236071b7df0258db69fc9fc19
 
   useEffect(() => {
     setError(null);
     setLoading(true);
 
-    if (search !== "") {
-      fetch(`https://api.teleport.org/api/cities/?search=${search}`)
-        .then((response) => response.json())
-        .then((data) => {
+    const fetchCities = async () => {
+      if (search !== "") {
+        try {
+          const response = await fetch(`https://api.teleport.org/api/cities/?search=${search}`);
+          const data = await response.json();
           console.log("cities", data);
-          setDestinationResult(data._embedded?.["city:search-results"]);
           setLoading(false);
-        })
-        .catch((error) => {
+          return data._embedded?.["city:search-results"];
+        } catch (error) {
           setError("Error fetching destination data. Please try again later.");
           setLoading(false);
-        });
-    } else {
-      setLoading(false);
-      setDestinationResult([]);
-    }
+        }
+      }
+    };
+
+    const fetchAirports = async (city) => {
+      const url = `https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchAirport?query=${city}`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+          'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
+        }
+      };
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log("airports", result.data);
+        return result.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchFlights = async (airport) => {
+      const date = new Date().toISOString().slice(0, 10);
+      const url = `https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchFlights?sourceAirportCode=MIA&destinationAirportCode=${airport}&date=${date}&itineraryType=ONE_WAY&sortOrder=ML_BEST_VALUE&numAdults=1&numSeniors=0&classOfService=ECONOMY&pageNumber=1&currencyCode=USD`;
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
+          'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
+        }
+      };
+      try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        // console.log(result.data.flights, "flights");
+         console.log(result,"flights")
+         setFlights(result.data.flights);
+         console.log("flights") 
+      } catch (error) {
+        console.error(error);
+      }
+    };
+   
+
+    const fetchBoth = async () => {
+      const cities = await fetchCities();
+      if (cities && cities.length > 0) {
+        const destination = cities[0].matching_full_name;
+        const wholeLocationName = destination.split(", ");
+        const city = wholeLocationName[0];
+        const airports = await fetchAirports(city);
+        if (airports && airports.length > 0) {
+          const airport = airports[0].airportCode;
+          console.log(airports, "here");
+          const flights = await fetchFlights(airport);
+          //  console.log(flights, "flights")
+          setDestinationResult(cities);
+          setAirportResult(airports);
+          setFlightResult(flights);
+        }
+      }
+    };
+
+    fetchBoth();
   }, [search]);
-
-  useEffect(() => {
-    if (destinationResult.length > 0) {
-      const result = destinationResult[0].matching_full_name;
-      const all = result.split(", ");
-      const city = all[0];
-      const fullState = all[1];
-      const state = convertState(fullState);
-
-      const fetchWeatherData = async () => {
-        const weatherUrl = `https://weatherapi-com.p.rapidapi.com/current.json?q=${city}&${state}`;
-        const weatherOptions = {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-            'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
-          }
-        };
-
-        try {
-          const response = await fetch(weatherUrl, weatherOptions);
-          const data = await response.json();
-          console.log("weather", data);
-          setWeatherResult(data);
-        } catch (error) {
-          setError("Error fetching weather data. Please try again later.");
-        }
-      };
-
-      const fetchFlightData = async () => {
-        const flightUrl = `https://tripadvisor16.p.rapidapi.com/api/v1/flights/searchAirport?query=${city}`;
-        const flightOptions = {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key': '26417e7137msh4d7acb99d1bc795p134430jsn57e3f84c008c',
-            'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
-          }
-        };
-
-        try {
-          const response = await fetch(flightUrl, flightOptions);
-          const data = await response.json();
-          console.log("flights", data);
-          setFlightResult(data);
-        } catch (error) {
-          setError("Error fetching flight data. Please try again later.");
-        }
-      };
-
-      fetchWeatherData();
-      fetchFlightData();
-    } else {
-      setWeatherResult([]);
-      setFlightResult([]);
-    }
-  }, [destinationResult]);
 
   const startSearch = (event) => {
     event.preventDefault();
@@ -187,17 +128,24 @@ const MySearch = () => {
 
   const clearResults = () => {
     setDestinationResult([]);
-    setWeatherResult([]);
     setFlightResult([]);
   };
-
+  const getFlights =  () => {
+    fetch("https://sblaise123-fictional-barnacle-5wq5jw6pq4rfv6v9-3001.app.github.dev/api/getflightinfo",{
+      method:"GET",
+      headers:{"Content-Type":"application/json"}
+    })
+    .then((res) => res.json())
+        .then((data) =>  setSecondFlight( data ))
+        .catch((error) => console.log("error", error));
+  };
+  getFlights()
   return (
     <div className="my-search-container">
       <div className="jumbotron">
         <h1>It's Time To Get Away</h1>
         <p>Where Do You Want To Go!</p>
       </div>
-
       <form onSubmit={startSearch} className="form-inline my-search-form">
         <div className="input-group">
           <input
@@ -218,10 +166,8 @@ const MySearch = () => {
           </div>
         </div>
       </form>
-
       {loading ? <div className="loader">Loading...</div> : null}
       {error ? <div className="alert alert-danger">{error}</div> : null}
-
       <div className="my-results-container">
         {destinationResult.length > 0 ? (
           <div className="my-search-results">
@@ -234,9 +180,8 @@ const MySearch = () => {
                   <h3 className="card-title">{city.matching_full_name}</h3>
                   <p className="card-text">{city.matching_alternate_names.name}</p>
                   <button
-                    className={`btn ${
-                      isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
-                    }`}
+                    className={`btn ${isFavorite(city.matching_full_name) ? "btn-danger" : "btn-outline-danger"
+                      }`}
                     onClick={() =>
                       isFavorite(city.matching_full_name)
                         ? removeFromFavorites(city.matching_full_name)
@@ -253,42 +198,28 @@ const MySearch = () => {
                 </div>
               </div>
             ))}
+            <div className="my-flight-results">
+              <h2>Flight Prices</h2>
+              {secondFlight.length > 0 ? (
+                secondFlight.map((flight, index) => (
+                  <div key={index} className="card flight-item">
+                    <div className="card-body">
+                      <p>Flight Provider: {flight.flightProvider}</p>
+                      <p>Price: {flight.price}</p>
+                      <p>Departure Date: {flight.departureDate}</p>
+                      {/* <p>{getFlights()}</p> */}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <><p>No flight data available.</p></>
+              )}
+            </div>
           </div>
         ) : (
-          <div className="alert alert-info">no results</div>
+          <div className="alert alert-info">No results found.</div>
         )}
-
-        {weatherResult.length > 0 ? (
-          <div className="my-weather-results">
-            <h2>Weather Information</h2>
-            {weatherResult.map((weather1, index) => (
-              <div key={index} className="card weather-item">
-                <div className="card-body">
-                  <p>Temperature: {weather1.temp}</p>
-                  <p>Feels Like: {weather1.feels_like}</p>
-                  <p>Humidity: {weather1.humidity}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : null}
       </div>
-
-      {flightResult.length > 0 ? (
-        <div className="my-flight-results">
-          <h2>Flight Prices</h2>
-          {flightResult.map((flight, index) => (
-            <div key={index} className="card flight-item">
-              <div className="card-body">
-                <p>Flight Provider: {flight.provider}</p>
-                <p>Price: {flight.price}</p>
-                <p>Departure Date: {flight.departureDate}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : null}
-
       <button className="btn btn-secondary" onClick={clearResults}>
         Clear Results
       </button>

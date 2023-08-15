@@ -4,11 +4,15 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Favorites , Destinations
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager
+
+
 
 
 
 api = Blueprint('api', __name__)
+
+
 
 @api.route('/landing-page', methods=['POST', 'GET'])
 def landing_page():
@@ -167,12 +171,13 @@ def get_all_Destinations():
     response_body = jsonify(mapped_Destinations)
     return response_body, 200
 
-@api.route("/destination", methods=["PUT"])
+@api.route("/destination", methods=["POST"])
+@jwt_required()
 def put_users_favorites():
      user_email = get_jwt_identity()
      user = User.query.filter_by( email = user_email ).first()
      response_body = request.get_json()
-     favorites = Favorites(Destination = response_body["newFav"])
+     favorites = Favorites(Destination = response_body["newFav"], email = user)
      db.session.add(favorites)
      db.session.commit()
 

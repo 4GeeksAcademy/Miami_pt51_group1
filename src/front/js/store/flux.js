@@ -15,16 +15,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addFav: (newFav) => {
 				const store = getStore();
 				const opts = {
-					method : "PUT" ,
+					method : "POST" ,
 					headers: {
-						"content-Type":"aplication/json"
+						"Content-Type":"application/json"
 					},
-					body:JSON.stringify({newFav:favorites}),
+					body:JSON.stringify({favorites:newFav}),
 					
 				};
 				try {
 					const response = fetch(
-						process.env.BACKEND_URL+"/destinations",opts
+						process.env.BACKEND_URL+"/destination",opts
 					);
 					if(response.status != 200){
 						alert("response was not 200")

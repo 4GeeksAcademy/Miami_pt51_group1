@@ -77,12 +77,14 @@ const MySearch = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
-   const {store,actions} = useContext(context);
+   const {store,actions} = useContext(Context);
   // const [ store, setStore ] = useState( {
   //   favorites:[]
   // } );
-  const handleFavorites = () =>{
+  const handleFavorites = (favorites) =>{
+    console.log("im being clicked")
     actions.addFav(favorites)
+    
   }
 
   useEffect(() => {
@@ -242,7 +244,8 @@ const MySearch = () => {
                     }
                   >
                     {isFavorite(city.matching_full_name) ? (
-                      <i className="fas fa-heart"></i>
+                      <><div onClick={() => handleFavorites(city.matching_full_name)} ><i className="fas fa-heart"></i></div></>
+                      
                     ) : (
                       <i className="far fa-heart"></i>
                     )}

@@ -73,16 +73,12 @@
 		]
 	},
 	"dependencies": {
-
+		"@everapi/currencyapi-js": "^1.0.6",
+		"airport-codes": "^1.0.2",
 		"await": "^0.2.6",
 		"axios": "^1.4.0",
 		"bootstrap": "^5.3.1",
 		"fontawesome": "^5.6.3",
-
-
-		"@everapi/currencyapi-js": "^1.0.6",
-
-
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-bootstrap": "^2.8.0",

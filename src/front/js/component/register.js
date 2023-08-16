@@ -35,7 +35,7 @@ export const Register = () => {
         <form className="form" onSubmit={handleSubmit}>
         <div>
             <div className="signup-form">
-                <div className="forms">
+                <div className="searchbar">
                 <label>Email Address</label>
                 <input
                 type="email"
@@ -45,7 +45,7 @@ export const Register = () => {
                 />
                 </div>
 
-                <div className="forms">
+                <div className="searchbar">
                 <label>Password</label>
                 <input
                 type="password"
@@ -54,7 +54,7 @@ export const Register = () => {
                 onChange={e => setPassword(e.target.value)}
                 />
                 </div>
-				<div className="forms">
+				<div className="searchbar">
                 <label>Recovery Question</label>
                 <input
                 type="text"
@@ -63,7 +63,7 @@ export const Register = () => {
                 onChange={e => setRecoveryquestion(e.target.value)}
                 />
                 </div>
-				<div className="forms">
+				<div className="searchbar">
                 <label>Recovery Answer</label>
                 <input
                 type="text"
@@ -74,7 +74,7 @@ export const Register = () => {
                 </div>
             </div>
             <div>
-                <button type="submit">Submit</button>
+                <button type="submit" className="searchbutton">Submit</button>
             </div>
         </div>
         </form>

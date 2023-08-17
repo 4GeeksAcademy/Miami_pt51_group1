@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { Context } from "../store/appContext";
 // import './Login.css';
+
+
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +15,9 @@ export const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     setIsLoggingIn(true);
+    
     try {
-      const response = await axios.post(`${process.env.BACKEND_URL}/login`, {
+      const response = await axios.post(process.env.BACKEND_URL+`/login`, { 
         email,
         password
       });

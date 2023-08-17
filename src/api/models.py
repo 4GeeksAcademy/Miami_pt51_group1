@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship, declarative_base
 db = SQLAlchemy()
 
 class User(db.Model):
-    __tableName__ = "user"
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -38,7 +38,7 @@ class User(db.Model):
         }
     
 class Favorites(db.Model):
-    __tableName__ = "favorites"
+    __tablename__ = "favorites"
     id = db.Column(db.Integer, primary_key=True)
     # maybe db.Boolean(False)
     # favorite = db.Column(db.Boolean,db.ForeignKey('user.favorites') , unique=False, nullable=True ,default= False)
@@ -55,7 +55,7 @@ class Favorites(db.Model):
         
 
 class Destinations(db.Model):
-    __tableName__ = "destinations"
+    __tablename__ = "destinations"
     id = db.Column(db.Integer, primary_key=True)
     city =  db.Column(db.String(120), unique=False, nullable=True) 
     country = db.Column(db.String(120), unique=False, nullable=True) 
@@ -69,7 +69,7 @@ class Destinations(db.Model):
 
 
 class Flights(db.Model): 
-    __tableName__ = "flights"
+    __tablename__ = "flights"
     id = db.Column(db.Integer, primary_key=True)
     price =  db.Column(db.String(120), unique=False, nullable=True) 
     flightProvider = db.Column(db.String(120), unique=False, nullable=True) 

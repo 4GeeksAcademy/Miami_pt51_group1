@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Favorites , Destinations, Flights
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-
+import datetime
 
 
 api = Blueprint('api', __name__)
@@ -199,25 +199,25 @@ def reset_password():
 
 
 
-# GET SECURITY QUESTIONS ENDPOINT
-@api.route('/get-security-questions', methods=['POST'])
-def get_security_questions():
+# GET SECURITY QUESTION ENDPOINT
+@api.route('/get-security-question', methods=['POST'])
+def get_security_question():
     email = request.json.get('email', None)
     user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({"questions": user.recovery_question}), 200
+        return jsonify({"question": user.recovery_question}), 200
     return jsonify({"error": "User not found"}), 404
 
-# VERIFY SECURITY ANSWERS ENDPOINT
-@api.route('/verify-security-answers', methods=['POST'])
-def verify_security_answers():
+# VERIFY SECURITY ANSWER ENDPOINT
+@api.route('/verify-security-answer', methods=['POST'])
+def verify_security_answer():
     email = request.json.get('email', None)
-    answers = request.json.get('answers', None)
+    answer = request.json.get('answer', None)
     user = User.query.filter_by(email=email).first()
-    if user and answers == user.recovery_answer:
+    if user and answer == user.recovery_answer:
         temp_token = create_access_token(identity=user.id, expires_delta=datetime.timedelta(minutes=10))
-        return jsonify({"token": temp_token, "message": "Answers verified"}), 200
-    return jsonify({"error": "Invalid answers"}), 403
+        return jsonify({"token": temp_token, "message": "Answer verified"}), 200
+    return jsonify({"error": "Invalid answer "+user.recovery_answer}), 403
 
 # UPDATE PASSWORD ENDPOINT (PROTECTED)
 @api.route('/update-password', methods=['POST'])
